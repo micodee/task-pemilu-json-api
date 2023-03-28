@@ -6,11 +6,17 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
  <link rel="stylesheet" href="style.css">
+ <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
  <title>Pemilu</title>
 </head>
 <body>
  <div class="container">
-  <table class="table table-bordered">
+  <table class="table table-bordered"
+     x-data="{ users: [] }"
+     x-init="fetch('https://jsonplaceholder.typicode.com/users')
+              .then(response => response.json())
+              .then(data => users = data)"
+  >
    <thead>
      <tr style="background-color: #2c2c2c; color: white;">
        <th scope="col">WILAYAH</th>
@@ -29,51 +35,23 @@
      </tr>
    </thead>
    <tbody>
+    <template x-for="user in users" :key="user.id">
      <tr>
-       <th scope="row">1</th>
-       <td>Mark</td>
-       <td>Otto</td>
-       <td>@mdo</td>
-       <td>@mdo</td>
-       <td>@mdo</td>
-       <td>@mdo</td>
-       <td>@mdo</td>
-       <td>@mdo</td>
-       <td>@mdo</td>
-       <td>@mdo</td>
-       <td>@mdo</td>
-       <td>@mdo</td>
-     </tr>
-     <tr>
-       <th scope="row">2</th>
-       <td>Jacob</td>
-       <td>Thornton</td>
-       <td>@fat</td>
-       <td>@fat</td>
-       <td>@fat</td>
-       <td>@fat</td>
-       <td>@fat</td>
-       <td>@fat</td>
-       <td>@fat</td>
-       <td>@fat</td>
-       <td>@fat</td>
-       <td>@fat</td>
-     </tr>
-     <tr>
-       <th scope="row">3</th>
-       <td>@twitter</td>
-       <td>@twitter</td>
-       <td>@twitter</td>
-       <td>@twitter</td>
-       <td>@twitter</td>
-       <td>@twitter</td>
-       <td>@twitter</td>
-       <td>@twitter</td>
-       <td>@twitter</td>
-       <td>@twitter</td>
-       <td>@twitter</td>
-       <td>@twitter</td>
-     </tr>
+       <td x-text="user.id">1</td>
+       <td x-text="user.username"></td>
+       <td x-text="user.name"></td>
+       <td x-text="user.phone"></td>
+       <td x-text="user.address.city"></td>
+       <td x-text="user.company.name"></td>
+       <td x-text="user.website"></td>
+       <td>-</td>
+       <td>-</td>
+       <td>-</td>
+       <td>-</td>
+       <td>-</td>
+       <td>-</td>
+      </tr>
+     </template>
    </tbody>
  </table>
  </div>

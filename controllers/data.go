@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"partai/models"
+	"strconv"
 )
 
 func ReadJSON(filepath string, v interface{}) error {
@@ -32,48 +33,56 @@ func ReadJSON(filepath string, v interface{}) error {
 	return nil
 }
 
-func Dapil() {
-	var dapilMap map[string]models.DapilData
-	err := ReadJSON("data/0.json", &dapilMap)
+func MapData() []models.Response {
+	res := []models.Response{}
+
+	var listWilayah map[string]interface{}
+	err := ReadJSON("data/0.json", &listWilayah)
 	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		return []models.Response{}
 	}
 
-	// melakukan looping pada setiap nilai dalam map
-	for _, value := range dapilMap {
+	var partai map[string]models.PartaiData
+	err = ReadJSON("data/partai.json", &partai)
+	if err != nil {
+		return []models.Response{}
+	}	
+
+	var listDPR map[string]interface{}
+	err = ReadJSON("data/dprri.json", &listDPR)
+	if err != nil {
+		return []models.Response{}
+	}
+
+	for iWilayah, v := range listWilayah {
 		data := models.Response{}
-		data.Wilayah = value.Nama
-		// fmt.Println("Wilayah:", value.Nama)
-	}
-}
+		
+		for i, x := range v.(map[string]interface{}) {
+			if i == "nama" {
+				data.Wilayah = x.(string)
+			}
+		}
 
-func Partai() {
-	var partaiMap map[string]models.PartaiData
-	err := ReadJSON("data/partai.json", &partaiMap)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		for iDPR, vDPR := range listDPR {
+			if iDPR == "table" {
+				for iTable, vTable := range vDPR.(map[string]interface{}) {
+					if iTable == iWilayah {
+						for iTBValue, vTBValue := range vTable.(map[string]interface{}) {
+							for _, pt := range partai {
+								idPartai, _ := strconv.Atoi(iTBValue)
+								if pt.IdPilihan == idPartai {
+									data.Perolehan.Partai = pt.Nama
+									data.Perolehan.TotalSuara = vTBValue.(float64)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		res = append(res, data)
 	}
 
-	// melakukan looping pada setiap elemen map
-	for key, value := range partaiMap {
-		fmt.Println("Key:", key)
-		fmt.Println("Value:", value.Nama)
-	}
-}
-
-func DprRI() {
-	var dprMap map[int]models.DprData
-	err := ReadJSON("data/dprri.json", &dprMap)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-
-	// melakukan looping pada setiap elemen map
-	for key, value := range dprMap {
-		fmt.Println("Key:", key)
-		fmt.Println("Value:", value)
-	}
+	return res
 }

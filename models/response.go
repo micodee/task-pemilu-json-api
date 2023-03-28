@@ -6,6 +6,6 @@ type Response struct {
 }
 
 type PerolehanResponse struct {
-	Partai     string `json:"partai"`
-	TotalSuara int    `json:"total_suara"`
+	Partai     string  `json:"partai"`
+	TotalSuara float64 `json:"total_suara"`
 }
