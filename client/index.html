@@ -12,10 +12,10 @@
 <body>
  <div class="container">
   <table class="table table-bordered"
-     x-data="{ pemilu: [] }"
+     x-data="{ pemilus: [] }"
      x-init="fetch('http://localhost:8080/hasil')
               .then(response => response.json())
-              .then(data => pemilu = data)"
+              .then(data => pemilus = data)"
   >
    <thead>
      <tr style="background-color: #2c2c2c; color: white;">
@@ -35,15 +35,15 @@
      </tr>
    </thead>
    <tbody>
-    <template x-for="user in users" :key="user.id">
+    <template x-for="pemilu in pemilus" :key="pemilu.wilayah">
      <tr>
-       <td x-text="user.id">1</td>
-       <td x-text="user.username"></td>
-       <td x-text="user.name"></td>
-       <td x-text="user.phone"></td>
-       <td x-text="user.address.city"></td>
-       <td x-text="user.company.name"></td>
-       <td x-text="user.website"></td>
+       <td x-text="pemilu.wilayah">1</td>
+       <td x-text="pemilu.perolehan.partai"></td>
+       <td x-text="pemilu.name"></td>
+       <td x-text="pemilu.phone"></td>
+       <td x-text="pemilu.address.city"></td>
+       <td x-text="pemilu.company.name"></td>
+       <td x-text="pemilu.website"></td>
        <td>-</td>
        <td>-</td>
        <td>-</td>
