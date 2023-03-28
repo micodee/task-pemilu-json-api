@@ -15,6 +15,6 @@ type PartaiData struct {
 }
 
 type DprData struct {
-	Chart int `json:"chart"`
-	Table int `json:"table"`
+	Chart []int `json:"chart"`
+	Table []int `json:"table"`
 }

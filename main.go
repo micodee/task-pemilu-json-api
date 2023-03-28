@@ -21,7 +21,7 @@ func main() {
 	e.GET("/hasil", func(c echo.Context) error {
 		// create map data with format JSON
 		data := models.Response{
-			Wilayah: models.DapilData.Nama,
+			Wilayah: "wilayah",
 		}
 
 		// send response with data JSON

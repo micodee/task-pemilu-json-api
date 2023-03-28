@@ -44,11 +44,7 @@ func Dapil() {
 	for _, value := range dapilMap {
 		data := models.Response{}
 		data.Wilayah = value.Nama
-		fmt.Println("Wilayah:", value.Nama)
-		// melakukan looping pada nilai dalam setiap elemen struct DapilData
-		for _, v := range value.Dapil {
-			fmt.Println("Dapil:", v)
-		}
+		// fmt.Println("Wilayah:", value.Nama)
 	}
 }
 
@@ -63,7 +59,7 @@ func Partai() {
 	// melakukan looping pada setiap elemen map
 	for key, value := range partaiMap {
 		fmt.Println("Key:", key)
-		fmt.Println("Value:", value)
+		fmt.Println("Value:", value.Nama)
 	}
 }
 
