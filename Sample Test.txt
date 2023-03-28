@@ -1,0 +1,20 @@
+1. Membaca file json dengan golang, menggabungkan data
+2. Membuat struktur response json yang sesuai dengan output seperti di gambar, format json bebas, selama sesuai dengan kebutuhan gambar.
+3. tampilkan response tersebut di endpoint localhost:8080/hasil
+
+sample response :
+
+{
+    "status" : true,
+    "data":[
+        {
+            "wilayah":"Aceh",
+            "perolehan" : [
+                {
+                    "partai": "PKB",
+                    "total_suara":180166
+                },...
+            ]
+        }, ...
+    ]
+}
