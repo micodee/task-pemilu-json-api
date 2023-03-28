@@ -64,6 +64,7 @@ func MapData() []models.Response {
 		}
 
 		for iDPR, vDPR := range listDPR {
+
 			if iDPR == "table" {
 				for iTable, vTable := range vDPR.(map[string]interface{}) {
 					if iTable == iWilayah {
@@ -71,14 +72,19 @@ func MapData() []models.Response {
 							for _, pt := range partai {
 								idPartai, _ := strconv.Atoi(iTBValue)
 								if pt.IdPilihan == idPartai {
-									data.Perolehan.Partai = pt.Nama
-									data.Perolehan.TotalSuara = vTBValue.(float64)
+									perolehan := models.PerolehanResponse{}
+
+									perolehan.Partai = pt.Nama
+									perolehan.TotalSuara = vTBValue.(float64)
+
+									data.Perolehan = append(data.Perolehan, perolehan)
 								}
 							}
 						}
 					}
 				}
 			}
+
 		}
 
 		res = append(res, data)

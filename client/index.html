@@ -12,10 +12,10 @@
 <body>
  <div class="container">
   <table class="table table-bordered"
-     x-data="{ users: [] }"
-     x-init="fetch('https://jsonplaceholder.typicode.com/users')
+     x-data="{ pemilu: [] }"
+     x-init="fetch('http://localhost:8080/hasil')
               .then(response => response.json())
-              .then(data => users = data)"
+              .then(data => pemilu = data)"
   >
    <thead>
      <tr style="background-color: #2c2c2c; color: white;">

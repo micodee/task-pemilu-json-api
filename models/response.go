@@ -1,8 +1,8 @@
 package models
 
 type Response struct {
-	Wilayah   string            `json:"wilayah"`
-	Perolehan PerolehanResponse `json:"perolehan"`
+	Wilayah   string              `json:"wilayah"`
+	Perolehan []PerolehanResponse `json:"perolehan"`
 }
 
 type PerolehanResponse struct {
