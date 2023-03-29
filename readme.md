@@ -49,7 +49,8 @@
   }
   ```
 
-- add in file main.go
+- Add route before port
+  > File: `main.go`
 
   ```bash
   // add route with method GET
@@ -60,4 +61,9 @@
   // send response with data JSON
   return c.JSON(http.StatusOK, result.SuccessResult{Status: "success", Data: data})
   })
+  ```
+
+- Testing method GET in localhost:8080/hasil
+  ```bash
+  go run .
   ```
