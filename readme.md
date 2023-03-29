@@ -38,12 +38,12 @@
   > File: `result.go`
 
   ```bash
-  - type SuccessResult struct {
+  type SuccessResult struct {
   Status string `json:"status"`
   Data interface{} `json:"data"`
   }
 
-  - type ErrorResult struct {
+  type ErrorResult struct {
   Status int `json:"status"`
   Message string `json:"message"`
   }
@@ -66,4 +66,19 @@
 - Testing method GET in localhost:8080/hasil
   ```bash
   go run .
+  ```
+
+- Create folder /models
+
+  > File: `response.go`
+  ```bash
+  type Response struct {
+	Wilayah   string              `json:"wilayah"`
+	Perolehan []PerolehanResponse `json:"perolehan"`
+  }
+
+  type PerolehanResponse struct {
+    Partai     string  `json:"partai"`
+    TotalSuara float64 `json:"total_suara"`
+  }
   ```
