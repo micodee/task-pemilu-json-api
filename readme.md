@@ -25,8 +25,39 @@
 
     }
 
-- Save (ctrl+s) for import automatis
+- Save (ctrl+s) for import automatis and then
 
   ```bash
   go mod tidy
+  ```
+
+## Create response
+
+- Create Folder /dto/result
+
+  > File: `result.go`
+
+  ```bash
+  - type SuccessResult struct {
+  Status string `json:"status"`
+  Data interface{} `json:"data"`
+  }
+
+  - type ErrorResult struct {
+  Status int `json:"status"`
+  Message string `json:"message"`
+  }
+  ```
+
+- add in file main.go
+
+  ```bash
+  // add route with method GET
+  e.GET("/hasil", func(c echo.Context) error {
+  // create map data with format JSON
+  data := "wilayah"
+
+  // send response with data JSON
+  return c.JSON(http.StatusOK, result.SuccessResult{Status: "success", Data: data})
+  })
   ```
