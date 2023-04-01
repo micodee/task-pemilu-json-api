@@ -102,29 +102,32 @@
 - Create folder /controllers and file data.go
 
   > file `data.go`
-  ```bash
-  func ReadJSON(filepath string, v interface{}) error {
-	// Read file JSON
-	file, err := os.Open(filepath)
-	if err != nil {
-		fmt.Println("Error read file:", err)
-		return err
-	}
-	defer file.Close()
 
-	// Parse JSON
-	bytes, err := ioutil.ReadAll(file)
-	if err != nil {
-		fmt.Println("Error parsing JSON:", err)
-		return err
-	}
+  ## func Read JSON
 
-	err = json.Unmarshal(bytes, &v)
-	if err != nil {
-		fmt.Println("Error parsing JSON:", err)
-		return err
-	}
-	return nil
-  }
-  ```
+    ```bash
+    func ReadJSON(filepath string, v interface{}) error {
+    // Read file JSON
+    file, err := os.Open(filepath)
+    if err != nil {
+      fmt.Println("Error read file:", err)
+      return err
+    }
+    defer file.Close()
+
+    // Parse JSON
+    bytes, err := ioutil.ReadAll(file)
+    if err != nil {
+      fmt.Println("Error parsing JSON:", err)
+      return err
+    }
+
+    err = json.Unmarshal(bytes, &v)
+    if err != nil {
+      fmt.Println("Error parsing JSON:", err)
+      return err
+    }
+    return nil
+    }
+    ```
 
