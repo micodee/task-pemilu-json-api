@@ -103,7 +103,7 @@
 
   > file `data.go`
 
-  ## func Read JSON
+  - func Read JSON
 
     ```bash
     func ReadJSON(filepath string, v interface{}) error {
@@ -131,3 +131,66 @@
     }
     ```
 
+  - func MapData
+
+    ```bash
+    func MapData() []models.Response {
+    res := []models.Response{}
+
+    var listWilayah map[string]interface{}
+    err := ReadJSON("data/0.json", &listWilayah)
+    if err != nil {
+      return []models.Response{}
+    }
+
+    var partai map[string]models.PartaiData
+    err = ReadJSON("data/partai.json", &partai)
+    if err != nil {
+      return []models.Response{}
+    }	
+
+    var listDPR map[string]interface{}
+    err = ReadJSON("data/dprri.json", &listDPR)
+    if err != nil {
+      return []models.Response{}
+    }
+
+    for iWilayah, v := range listWilayah {
+      data := models.Response{}
+      
+      for i, x := range v.(map[string]interface{}) {
+        if i == "nama" {
+          data.Wilayah = x.(string)
+        }
+      }
+
+      for iDPR, vDPR := range listDPR {
+
+        if iDPR == "table" {
+          for iTable, vTable := range vDPR.(map[string]interface{}) {
+            if iTable == iWilayah {
+              for iTBValue, vTBValue := range vTable.(map[string]interface{}) {
+                for _, pt := range partai {
+                  idPartai, _ := strconv.Atoi(iTBValue)
+                  if pt.IdPilihan == idPartai {
+                    perolehan := models.PerolehanResponse{}
+
+                    perolehan.Partai = pt.Nama
+                    perolehan.TotalSuara = vTBValue.(float64)
+
+                    data.Perolehan = append(data.Perolehan, perolehan)
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      }
+
+      res = append(res, data)
+    }
+
+    return res
+    }
+    ```
