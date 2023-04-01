@@ -50,6 +50,7 @@
   ```
 
 - Add route before port
+
   > File: `main.go`
 
   ```bash
@@ -64,6 +65,7 @@
   ```
 
 - Testing method GET in localhost:8080/hasil
+
   ```bash
   go run .
   ```
@@ -71,10 +73,11 @@
 - Create folder /models
 
   > File: `response.go`
+
   ```bash
   type Response struct {
-	Wilayah   string              `json:"wilayah"`
-	Perolehan []PerolehanResponse `json:"perolehan"`
+  Wilayah   string              `json:"wilayah"`
+  Perolehan []PerolehanResponse `json:"perolehan"`
   }
 
   type PerolehanResponse struct {
@@ -88,14 +91,15 @@
 - Create file data.go in /models
 
   > File `data.go`
+
   ```bash
   type PartaiData struct {
-	Warna       string `json:"warna"`
-	IsAceh      bool   `json:"is_aceh"`
-	IdPilihan   int    `json:"id_pilihan"`
-	NomorUrut   int    `json:"nomor_urut"`
-	Nama        string `json:"nama"`
-	NamaLengkap string `json:"nama_lengkap"`
+  Warna       string `json:"warna"`
+  IsAceh      bool   `json:"is_aceh"`
+  IdPilihan   int    `json:"id_pilihan"`
+  NomorUrut   int    `json:"nomor_urut"`
+  Nama        string `json:"nama"`
+  NamaLengkap string `json:"nama_lengkap"`
   }
   ```
 
@@ -147,7 +151,7 @@
     err = ReadJSON("data/partai.json", &partai)
     if err != nil {
       return []models.Response{}
-    }	
+    }
 
     var listDPR map[string]interface{}
     err = ReadJSON("data/dprri.json", &listDPR)
@@ -157,7 +161,7 @@
 
     for iWilayah, v := range listWilayah {
       data := models.Response{}
-      
+
       for i, x := range v.(map[string]interface{}) {
         if i == "nama" {
           data.Wilayah = x.(string)
@@ -194,3 +198,24 @@
     return res
     }
     ```
+
+  - Update data in main.go & add CORS Origin
+
+  > file `main.go`
+
+  ```bash
+  e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+    AllowOrigins: []string{"*"},
+    AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.PATCH, echo.DELETE, echo.OPTIONS},
+    AllowHeaders: []string{"X-Requested-With", "Content-Type", "Authorization"},
+  }))
+
+  // add route with method GET
+  e.GET("/hasil", func(c echo.Context) error {
+    // create map data with format JSON
+    data := controllers.MapData()
+
+    // send response with data JSON
+    return c.JSON(http.StatusOK, result.SuccessResult{Status: "success", Data: data})
+  })
+  ```
